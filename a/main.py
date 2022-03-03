@@ -32,7 +32,7 @@ def buscarPalabras(nombreLibro, palabrasABuscar, numeroHilo, res):
         resultadostmp[i] = fileR.count(palabrasABuscar[i]) 
     print(resultadostmp)
     index = numeroHilo*10
-    res[index:index+9] = resultadostmp
+    resultados[index:index+9] = resultadostmp
 
 
 ### Se genera un hilo por cada archivo ###
@@ -44,3 +44,10 @@ for numHilo in range(numeroHilos):
                             target=buscarPalabras, 
                             args=([nombresLibros[numHilo], palabrasBusqueda, numHilo, resultados]) )
     hilo.start()
+    
+# Trabajar hasta terminar los hilos
+hilosCreados = threading.enumerate()
+for numHilo in range (numeroHilos):
+	hilosCreados[numHilo+1].join()
+	
+print(resultados)
