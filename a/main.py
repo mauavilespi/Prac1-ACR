@@ -2,6 +2,7 @@
 import os # Para obtener los nombres de los libros
 import threading # Para la creacion de hilos
 
+
 ### El proceso padre lee los nombres de los libros ###
 nombresLibros = [] # Se crea un arreglo donde se guardaran los nombres
 directorioActual = os.getcwd() # Obtener el directorio actual
@@ -12,12 +13,12 @@ print("Libros: \n", nombresLibros)
 
 
 ### Palabras a buscar ###
-# El usuario las puede escoger via terminal o podemos definirlas con la variable "palabrasBusqueda"
 palabrasBusqueda = ["rey", "reina", "Dios", "caballeros", "casa", "honor", "espada", "corazon", "muerte", "bien"]
 
 
 ### Arreglo global de resultados ###
 resultados = [0] * 100
+
 
 ### Funcion de busqueda de palabras en el texto
 def buscarPalabras(nombreLibro, palabrasABuscar, numeroHilo):
@@ -44,7 +45,6 @@ for numHilo in range(numeroHilos):
                             target=buscarPalabras, 
                             args=([nombresLibros[numHilo], palabrasBusqueda, numHilo]) )
     hilo.start()
-    hilo.join()
         
 # Trabajar hasta terminar los hilos
 hilosCreados = threading.enumerate()
