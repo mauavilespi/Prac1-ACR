@@ -1,3 +1,8 @@
+### Practica 1a. Conteo de Palabras
+# Aviles Piña Mauricio
+# Gustavo Lopez Gonzalez
+
+
 # Librerias
 import os # Para obtener los nombres de los libros
 import threading # Para la creacion de hilos
@@ -58,8 +63,10 @@ for numHilo in range (len(hilosCreados)-1):
 ### El proceso padre mandará la información a la pantalla ###
 print(" ***** La info recolectada es: ***** \n")
 
+
 # Total de palabras x palabra a buscar
 palabrasPorPalabrasBuscadas = [0] * 10
+
 
 # Palabras x libro
 for i in range(numeroHilos):
@@ -68,10 +75,12 @@ for i in range(numeroHilos):
 		indice = (i * 10) + j 
 		palabrasPorPalabrasBuscadas[j] = palabrasPorPalabrasBuscadas[j] + resultados[indice]
 		print (palabrasBusqueda[j]+": " + str(resultados[indice])+"\n")
-		
+
+
 # Total de palabras en todos los libros
 totalPalabrasLibros = sum(palabrasPorLibro)
 print("Total de palabras en los 10 libros: ", totalPalabrasLibros)
+
 
 # Porcentajes
 print("\n*** Porcentajes *** ")	
