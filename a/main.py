@@ -13,14 +13,14 @@ print("Libros: \n", nombresLibros)
 
 ### Palabras a buscar ###
 # El usuario las puede escoger via terminal o podemos definirlas con la variable "palabrasBusqueda"
-palabrasBusqueda = ["rey", "reina", "Dios", "caballeros", "casa", "honor", "espada", "corazon", "it", "bien"]
+palabrasBusqueda = ["rey", "reina", "Dios", "caballeros", "casa", "honor", "espada", "corazon", "muerte", "bien"]
 
 
 ### Arreglo global de resultados ###
 resultados = [0] * 100
 
 ### Funcion de busqueda de palabras en el texto
-def buscarPalabras(nombreLibro, palabrasABuscar, numeroHilo, res):
+def buscarPalabras(nombreLibro, palabrasABuscar, numeroHilo):
     global resultados
     print ("\nLibro: ", nombreLibro)
     resultadostmp = [0] * 10
@@ -36,18 +36,31 @@ def buscarPalabras(nombreLibro, palabrasABuscar, numeroHilo, res):
 
 
 ### Se genera un hilo por cada archivo ###
-numeroHilos = 3 # Cantidad de hilos por crear
+numeroHilos = 10 # Cantidad de hilos por crear
 for numHilo in range(numeroHilos):
     # Argumentos: name-nombre del hilo, target-funcion que realizara, args-argumentos que recibe
     # El hilo recibe el nombre del libro que va a utilizar y las 10 palabras
     hilo = threading.Thread( name = "Hilo#%s" %numHilo, 
                             target=buscarPalabras, 
-                            args=([nombresLibros[numHilo], palabrasBusqueda, numHilo, resultados]) )
+                            args=([nombresLibros[numHilo], palabrasBusqueda, numHilo]) )
     hilo.start()
-    
+    hilo.join()
+        
 # Trabajar hasta terminar los hilos
 hilosCreados = threading.enumerate()
-for numHilo in range (numeroHilos):
+for numHilo in range (len(hilosCreados)-1):
 	hilosCreados[numHilo+1].join()
 	
 print(resultados)
+
+
+### El proceso padre mandará la información a la pantalla ###
+print("\n ***** La info recolectada es: ***** \n")
+for i in range(numeroHilos):
+	print("\n*** Libro: ", nombresLibros[i])
+	for j in range (10):
+		indice = (i * 10) + j 
+		cadena = palabrasBusqueda[j] + ": " + str(resultados)
+		print (palabrasBusqueda[j]+": " + str(resultados[indice])+"\n")
+		
+		
